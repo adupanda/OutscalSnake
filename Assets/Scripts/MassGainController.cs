@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class MassGainController : Consumables
 {
-    protected override void ConsumableEffect()
+    
+    
+    protected override void ConsumableEffect(GameObject snakeObject)
     {
         
-        if (GameState.Instance.snakeHeadRef.transform.position == this.transform.position)
-        {
-            GameState.Instance.snakeHeadRef.GetComponent<SnakeHead>().AddPart();
-            
-        }
-        
-        
+      
+        snakeObject.GetComponent<SnakeHead>().AddPart(1);
+
+       
+
+
     }
 
     

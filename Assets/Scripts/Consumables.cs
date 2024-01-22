@@ -6,24 +6,54 @@ public abstract class Consumables : MonoBehaviour
 {
     public int chanceToSpawn;
 
-    private void Start()
+    [SerializeField]
+    protected float lifetime;
+
+    
+
+    protected virtual void Start()
     {
-        
+
+        StartCoroutine(RemoveCoroutine());
     }
 
     protected void Update()
     {
-        if (GameState.Instance.snakeHeadRef.transform.position == this.transform.position)
+        if (GameState.Instance.snakeHead1Ref.transform.position == this.transform.position )
         {
-            ConsumableEffect();
+            ConsumableEffect(GameState.Instance.snakeHead1Ref);
+            RemoveConsumable();
             
-            LevelManager.Instance.currentConsumableCount--;
-            Vector2 finalPosition = this.transform.position;
-            LevelManager.Instance.positions.Remove(finalPosition);
-            Destroy(gameObject);
+            
+        }
+        else if(GameState.Instance.snakeHead2Ref.transform.position == transform.position)
+        {
+            ConsumableEffect(GameState.Instance.snakeHead2Ref);
+
+            RemoveConsumable();
         }
     }
 
-    protected abstract void ConsumableEffect();
+    protected abstract void ConsumableEffect(GameObject snakeObject);
     
+    protected virtual void RemoveConsumable()
+    {
+        LevelManager.Instance.currentConsumableCount--;
+        Vector2 finalPosition = this.transform.position;
+        LevelManager.Instance.positions.Remove(finalPosition);
+        LevelManager.Instance.consumableListRef.Remove(this.gameObject);
+        Destroy(gameObject);
+    }
+    
+    IEnumerator RemoveCoroutine()
+    {
+        bool isAlive = true;
+        while(isAlive)
+        {
+            
+            yield return new WaitForSeconds(lifetime);
+            RemoveConsumable();
+            Destroy(gameObject);
+        }
+    }
 }

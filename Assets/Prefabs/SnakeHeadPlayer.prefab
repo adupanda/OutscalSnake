@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3781818896787097575}
   - component: {fileID: 875122282778075595}
   - component: {fileID: 673243840438590598}
-  - component: {fileID: 2343207629831334944}
   m_Layer: 0
   m_Name: SnakeHeadPlayer
   m_TagString: Untagged
@@ -47,16 +46,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87ca7549db8d134280f116d777f2000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
   moveDelay: 0.1
+  shieldDuration: 5
+  shieldHeadSprite: {fileID: 1716265286168655116, guid: afe2826b5d7ab4f4e9f7e98b92b465a1, type: 3}
+  snakeName: 
+  snakePartSprite: {fileID: 0}
+  isShieldActive: 0
+  snakeHeadSprite: {fileID: 0}
   Up: 119
   Down: 115
   Left: 97
   Right: 100
-  buttonPressed: {x: 0, y: 0}
-  rotationDirection: {x: 0, y: 0, z: 0}
   snakePartObject: {fileID: 7175898339713716719, guid: 7a186fd9adcab2b4db5949ceaddf9801, type: 3}
+  snakeLength: 0
   snakeParts: []
+  speedUpPercentage: 50
+  speedHeadSprite: {fileID: 2163038099068360078, guid: afe2826b5d7ab4f4e9f7e98b92b465a1, type: 3}
+  speedUpDuration: 3
 --- !u!212 &875122282778075595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -126,24 +132,3 @@ MonoBehaviour:
   snakeTail: {fileID: 1318367012160618393, guid: 49c5059a89d86fb4cb9edaedd4c22568, type: 3}
   currentPosition: {x: 0, y: 0}
   previousPosition: {x: 0, y: 0}
---- !u!95 &2343207629831334944
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1447126613979596624}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1e8ab9f81b3649b4cb26941f01a487b5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

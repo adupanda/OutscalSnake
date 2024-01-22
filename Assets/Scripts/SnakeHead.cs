@@ -8,70 +8,119 @@ using UnityEngine;
 
 public class SnakeHead : MonoBehaviour
 {
+
+    int PlayerScore;
+
     [SerializeField]
-    private float speed = 1f;
+    public float moveDelay = 0.1f;
+
     [SerializeField]
-    private float moveDelay = 0.5f;
+    float shieldDuration;
+
+    [SerializeField]
+    Sprite shieldHeadSprite;
 
     SnakePart thisSnakePart;
 
+    public string snakeName;
 
-    int snakeLength = 0;
+    public Sprite snakePartSprite;
 
     Vector2 previousPos;
 
-    [SerializeField]
-    KeyCode Up;
-    [SerializeField]
-    KeyCode Down;
-    [SerializeField]
-    KeyCode Left;
-    [SerializeField]
-    KeyCode Right;
+    public bool isShieldActive = false;
 
-    public Vector2 buttonPressed;
+    public Sprite snakeHeadSprite;
+
+    [SerializeField]
+    public KeyCode Up;
+    [SerializeField]
+    public KeyCode Down;
+    [SerializeField]
+    public KeyCode Left;
+    [SerializeField]
+    public KeyCode Right;
+
+    Vector2 buttonPressed;
 
     Vector2 moveDirection;
 
-    public Vector3 rotationDirection;
+    Vector3 rotationDirection;
 
     [SerializeField]
     GameObject snakePartObject;
 
-    SpriteRenderer spriteRenderer;
+    public int snakeLength;
+    
+    public List<GameObject> snakeParts = new List<GameObject>();
     [SerializeField]
-    List<GameObject> snakeParts = new List<GameObject>();
-
-    
-    
+    private float speedUpPercentage;
+    [SerializeField]
+    private Sprite speedHeadSprite;
+    [SerializeField]
+    private float speedUpDuration;
 
     private void Awake()
     {
         thisSnakePart = GetComponent<SnakePart>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        
     }
 
+    public int  GetPlayerScore()
+    {
+        return PlayerScore;
+    }
+    public void AddScore(int amount)
+    {
+        PlayerScore += amount;
+    }
+    public void RemoveScore(int amount)
+    {
+        PlayerScore-= amount;   
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         snakeLength = 0;
         snakeParts.Add(gameObject);
-        snakeLength++;
+        snakeLength += 1;
 
         StartCoroutine(MoveCoroutine());
         buttonPressed = transform.up;
+        snakeHeadSprite = GetComponent<SpriteRenderer>().sprite;
     }
 
-    public void AddPart()
+
+    public void AddPart(int numOfParts)
     {
         
+        for(int i=0 ; i<numOfParts; i++)
+        {
+            GameObject snakePartRef = Instantiate(snakePartObject, snakeParts[snakeParts.Count - 1].GetComponent<SnakePart>().previousPosition, Quaternion.identity);
+            snakePartRef.GetComponent<SpriteRenderer>().sprite = snakePartSprite;
+            snakeParts.Add(snakePartRef);
+            snakeLength++;
+            AddScore(10);
+        }
         
-        GameObject snakePartRef = Instantiate(snakePartObject, snakeParts[snakeParts.Count-1].transform.position,Quaternion.identity);
-        snakeParts.Add(snakePartRef);
-        snakeLength++;
+        
     }
 
+
+    public void RemovePart(int numOfParts)
+    {
+        for (int i = 0; i < numOfParts; i++)
+        {
+            Destroy(snakeParts[snakeParts.Count - 1]);
+            snakeParts.Remove(snakeParts[snakeParts.Count - 1]);
+            snakeLength--;
+            RemoveScore(10);
+        }
+
+       
+        
+    }
     // Update is called once per frame
     void Update()
     {
@@ -121,9 +170,11 @@ public class SnakeHead : MonoBehaviour
 
             previousPos = transform.position;
             thisSnakePart.previousPosition = previousPos;
-            transform.position += new Vector3(buttonPressed.x * speed,buttonPressed.y*speed,0);
+            transform.position += new Vector3(buttonPressed.x,buttonPressed.y,0);
+            
             transform.rotation = Quaternion.Euler(rotationDirection);
             moveDirection = buttonPressed;
+            Debug.Log("Im Moving");
             foreach(var item in snakeParts)
             {
                 if(item != this.gameObject)
@@ -132,8 +183,12 @@ public class SnakeHead : MonoBehaviour
                     
                     if (snakeParts[partIndex - 1] != null)
                     {
-                        item.GetComponent<SnakePart>().MoveTo(snakeParts[partIndex - 1].GetComponent<SnakePart>().previousPosition);
-                        Debug.Log(snakeParts[partIndex - 1].GetComponent<SnakePart>().previousPosition);
+                        if(item)
+                        {
+                            item.GetComponent<SnakePart>().MoveTo(snakeParts[partIndex - 1].GetComponent<SnakePart>().previousPosition);
+                        }
+                        
+                        
                     }
                 }
                
@@ -142,5 +197,51 @@ public class SnakeHead : MonoBehaviour
             yield return new WaitForSeconds(moveDelay);
         }
         
+    }
+
+    public void ApplyShield()
+    {
+        StartCoroutine(ShieldCoroutine());
+    }
+
+    IEnumerator ShieldCoroutine()
+    {
+        isShieldActive = true;
+
+        GetComponent<SpriteRenderer>().sprite = shieldHeadSprite;
+        bool shieldLoop = false;
+        while (!shieldLoop)
+        {
+
+            yield return new WaitForSeconds(shieldDuration);
+            isShieldActive = false;
+            GetComponent<SpriteRenderer>().sprite =snakeHeadSprite;
+            shieldLoop = true;
+
+            
+        }
+    }
+
+    public void ApplySpeedUp()
+    {
+        StartCoroutine(SpeedupLifetime());
+    }
+
+    IEnumerator SpeedupLifetime()
+    {
+        moveDelay *= (speedUpPercentage / 100);
+
+        GetComponent<SpriteRenderer>().sprite = speedHeadSprite;
+        bool speedUpLoop = false;
+        while (!speedUpLoop)
+        {
+
+            yield return new WaitForSeconds(speedUpDuration);
+            moveDelay = 0.1f;
+            GetComponent<SpriteRenderer>().sprite = snakeHeadSprite;
+            speedUpLoop = true;
+
+            
+        }
     }
 }
