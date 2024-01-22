@@ -1,1 +1,3 @@
 # OutscalSnake
+
+Snake Game. Enjoy :)
