@@ -1,3 +1,3 @@
 # OutscalSnake
 
-Snake Game. Enjoy :)
+Co-op Snake Game. Enjoy :)
