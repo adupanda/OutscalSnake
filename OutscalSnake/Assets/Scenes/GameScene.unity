@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.59748423, g: 0.59748423, b: 0.59748423, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -246,9 +246,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConsumableList:
   - {fileID: 77040421851100081, guid: 791c364d298c87248bfd528716cef134, type: 3}
-  maxConsumableCount: 5
+  - {fileID: 77040421851100081, guid: cd8ccbfc91bbd7644adfc8fe7906a767, type: 3}
+  - {fileID: 77040421851100081, guid: 67ee469ae42247a4182c26e390119f1a, type: 3}
+  - {fileID: 77040421851100081, guid: 008d7e64e59d6bf48a84ba55699e889f, type: 3}
+  maxConsumableCount: 7
   currentConsumableCount: 0
   positions: []
+  consumableListRef: []
 --- !u!4 &834168255
 Transform:
   m_ObjectHideFlags: 0
@@ -309,6 +313,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snakeHeadObject: {fileID: 1447126613979596624, guid: 35130af1e486075419273e62035ae6f3, type: 3}
+  snakeHead1Ref: {fileID: 0}
+  snakeHead2Ref: {fileID: 0}
+  Player1Up: 119
+  Player1Down: 115
+  Player1Left: 97
+  Player1Right: 100
+  Player2Up: 273
+  Player2Down: 274
+  Player2Left: 276
+  Player2Right: 275
+  snakeHead1Spawn: {x: -7, y: 0}
+  snakeHead2Spawn: {x: 10, y: 0}
+  player1Name: Rick
+  player2Name: Morty
+  snake1HeadSprite: {fileID: -4425589873640470277, guid: 49c5059a89d86fb4cb9edaedd4c22568, type: 3}
+  snake1BodySprite: {fileID: -3766167004397723061, guid: 49c5059a89d86fb4cb9edaedd4c22568, type: 3}
+  snake2HeadSprite: {fileID: 3040690612368502945, guid: d01ce482958b7d64abcd414f16156cd8, type: 3}
+  snake2BodySprite: {fileID: -1773799119931286853, guid: d01ce482958b7d64abcd414f16156cd8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -19,7 +19,15 @@ public class SnakePart : MonoBehaviour
     Vector2 moveDir;
     Vector3 rotation;
 
-    
+    GameObject snake1;
+    GameObject snake2;
+
+
+    private void Awake()
+    {
+        snake1 = GameState.Instance.snakeHead1Ref;
+        snake2 = GameState.Instance.snakeHead2Ref;
+    }
 
     // Update is called once per frame
     void Update()
@@ -65,9 +73,32 @@ public class SnakePart : MonoBehaviour
 
     public void MoveTo(Vector2 newPos)
     {
-        previousPosition = transform.position;
-        currentPosition = newPos;
-        transform.position = currentPosition;
+        if (!this.gameObject.GetComponent<SnakeHead>())
+        {
+            previousPosition = transform.position;
+            currentPosition = newPos;
+            transform.position = currentPosition;
+            KillSnake();
+        }
+
+        
     }
     
+    public void KillSnake()
+    {
+        if(snake1.transform.position == new Vector3(currentPosition.x,currentPosition.y,0) && snake1.GetComponent<SnakeHead>().isShieldActive == false)
+        {
+            
+
+            snake1.SetActive(false);
+            Debug.Log("Snake 2 wins");
+            
+        }
+        else if(snake2.transform.position == new Vector3(currentPosition.x, currentPosition.y, 0) && snake2.GetComponent<SnakeHead>().isShieldActive == false)
+        {
+            snake2.SetActive(false);
+            Debug.Log("Snake 1 wins");
+            
+        }
+    }
 }

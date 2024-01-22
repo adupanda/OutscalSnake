@@ -46,16 +46,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87ca7549db8d134280f116d777f2000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
   moveDelay: 0.1
+  shieldDuration: 5
+  shieldHeadSprite: {fileID: 1716265286168655116, guid: afe2826b5d7ab4f4e9f7e98b92b465a1, type: 3}
+  snakeName: 
+  snakePartSprite: {fileID: 0}
+  isShieldActive: 0
+  snakeHeadSprite: {fileID: 0}
   Up: 119
   Down: 115
   Left: 97
   Right: 100
-  buttonPressed: {x: 0, y: 0}
-  rotationDirection: {x: 0, y: 0, z: 0}
   snakePartObject: {fileID: 7175898339713716719, guid: 7a186fd9adcab2b4db5949ceaddf9801, type: 3}
+  snakeLength: 0
   snakeParts: []
+  speedUpPercentage: 50
+  speedHeadSprite: {fileID: 2163038099068360078, guid: afe2826b5d7ab4f4e9f7e98b92b465a1, type: 3}
+  speedUpDuration: 3
 --- !u!212 &875122282778075595
 SpriteRenderer:
   m_ObjectHideFlags: 0
