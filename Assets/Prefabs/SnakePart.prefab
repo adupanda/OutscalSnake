@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8368769561439199788}
   - component: {fileID: 1908712627796199393}
   - component: {fileID: 1646459652481878516}
+  - component: {fileID: 7252478113521905256}
   m_Layer: 0
   m_Name: SnakePart
   m_TagString: Untagged
@@ -46,7 +47,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundCorrection: 0.5
-  partIndex: 0
+  snakeBody: {fileID: 0}
+  snakeTail: {fileID: 0}
+  currentPosition: {x: 0, y: 0}
+  previousPosition: {x: 0, y: 0}
 --- !u!212 &1646459652481878516
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -99,3 +103,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7252478113521905256
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175898339713716719}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 165028be51662b64fa83014de93b9a8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
