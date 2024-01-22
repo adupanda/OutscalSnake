@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameState : MonoBehaviour
@@ -10,6 +11,24 @@ public class GameState : MonoBehaviour
     private GameObject snakeHeadObject;
     public GameObject snakeHead1Ref;
     public GameObject snakeHead2Ref;
+
+    [SerializeField]
+    string snakeGreenheadanim;
+    [SerializeField]
+    string snakeBlueheadanim;
+    [SerializeField]
+    string snakeGreenBodyanim;
+    [SerializeField]
+    string snakeBlueBodyanim;
+
+
+
+
+    [SerializeField]
+    string snake1ScoreText;
+    [SerializeField]
+    string snake2ScoreText;
+
 
     [SerializeField]
     KeyCode Player1Up;
@@ -47,8 +66,12 @@ public class GameState : MonoBehaviour
     [SerializeField]
     Sprite snake2BodySprite;
 
+
+    public TextMeshProUGUI winnerText;
+
     private void Awake()
     {
+        
         if (instance == null)
         {
             instance = this;
@@ -58,6 +81,8 @@ public class GameState : MonoBehaviour
         
         snakeHead2Ref = Instantiate(snakeHeadObject, snakeHead2Spawn, Quaternion.identity).GetComponentInChildren<SnakeHead>().gameObject;
         SetControlsAndName();
+
+        winnerText.gameObject.SetActive(false);
     }
 
     void SetControlsAndName()
@@ -69,6 +94,9 @@ public class GameState : MonoBehaviour
         snakeHead1.Right = Player1Right;
         snakeHead1.snakePartSprite = snake1BodySprite;
         snakeHead1.snakeName = player1Name;
+        snakeHead1.headClip = snakeGreenheadanim;
+        snakeHead1.bodyClip = snakeGreenBodyanim;
+        snakeHead1.scoreTextObjectName = snake1ScoreText;
         snakeHead1Ref.GetComponent<SpriteRenderer>().sprite = snake1HeadSprite;
         
         SnakeHead snakeHead2 = snakeHead2Ref.GetComponent<SnakeHead>();
@@ -78,8 +106,12 @@ public class GameState : MonoBehaviour
         snakeHead2.Right = Player2Right;
         snakeHead2.snakePartSprite = snake2BodySprite;
         snakeHead2.snakeName = player2Name;
+        snakeHead2.headClip = snakeBlueheadanim;
+        snakeHead2.bodyClip = snakeBlueBodyanim;
+        snakeHead2.scoreTextObjectName = snake2ScoreText;
         snakeHead2Ref.GetComponent<SpriteRenderer>().sprite = snake2HeadSprite;
 
-        
+        snakeHead1.OnNameSet();
+        snakeHead2.OnNameSet();
     }
 }

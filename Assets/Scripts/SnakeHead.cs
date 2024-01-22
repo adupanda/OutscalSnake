@@ -9,6 +9,12 @@ using UnityEngine;
 public class SnakeHead : MonoBehaviour
 {
 
+
+
+    public string headClip;
+    public string bodyClip;
+    
+    
     int PlayerScore;
 
     [SerializeField]
@@ -59,11 +65,27 @@ public class SnakeHead : MonoBehaviour
     private Sprite speedHeadSprite;
     [SerializeField]
     private float speedUpDuration;
+    private bool isScoreBoosted;
+    [SerializeField]
+    private float scoreBoostDuration;
+    [SerializeField]
+    private Sprite scoreBoostHeadSprite;
+
+    ScoreTextController scoreTextController;
+
+    public string scoreTextObjectName;
 
     private void Awake()
     {
         thisSnakePart = GetComponent<SnakePart>();
         
+        
+    }
+
+    public void OnNameSet()
+    {
+        scoreTextController = GameObject.Find(scoreTextObjectName)?.GetComponent<ScoreTextController>();
+        Debug.Log(scoreTextController);
     }
 
     public int  GetPlayerScore()
@@ -72,7 +94,16 @@ public class SnakeHead : MonoBehaviour
     }
     public void AddScore(int amount)
     {
-        PlayerScore += amount;
+        if(isScoreBoosted)
+        {
+            PlayerScore += amount*2;
+        }
+        else
+        {
+            PlayerScore += amount;
+        }
+        Debug.Log(scoreTextController);
+        scoreTextController.SetScoreText(PlayerScore);
     }
     public void RemoveScore(int amount)
     {
@@ -174,7 +205,7 @@ public class SnakeHead : MonoBehaviour
             
             transform.rotation = Quaternion.Euler(rotationDirection);
             moveDirection = buttonPressed;
-            Debug.Log("Im Moving");
+            
             foreach(var item in snakeParts)
             {
                 if(item != this.gameObject)
@@ -242,6 +273,28 @@ public class SnakeHead : MonoBehaviour
             speedUpLoop = true;
 
             
+        }
+    }
+
+    public void ApplyScoreBoost()
+    {
+        StartCoroutine(ScoreBoostLifetime());
+    }
+    IEnumerator ScoreBoostLifetime()
+    {
+        isScoreBoosted = true;
+
+        GetComponent<SpriteRenderer>().sprite = scoreBoostHeadSprite;
+        bool scoreBoostLoop = false;
+        while (!scoreBoostLoop)
+        {
+
+            yield return new WaitForSeconds(scoreBoostDuration);
+            isScoreBoosted = false;
+            GetComponent<SpriteRenderer>().sprite = snakeHeadSprite;
+            scoreBoostLoop = true;
+
+
         }
     }
 }

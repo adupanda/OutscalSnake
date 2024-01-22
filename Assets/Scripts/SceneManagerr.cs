@@ -15,15 +15,23 @@ public class SceneManagerr : MonoBehaviour
     {
         
         SoundManager.Instance.Play(Sounds.buttonClick);
-        StartCoroutine(LoadLevel());
-    }
-
-    IEnumerator LoadLevel()
-    {
-        transition.SetTrigger("Start");
-        yield return new WaitForSeconds(transitionTime);
         SceneManager.LoadScene(sceneName);
-
-
+        SoundManager.Instance.Play(Sounds.GameStart);
+        //StartCoroutine(LoadLevel());
     }
+
+    //IEnumerator LoadLevel()
+    //{
+    //    bool loadScene = false;
+    //    while(!loadScene)
+    //    {
+    //        //transition.SetTrigger("Start");
+    //        //yield return new WaitForSeconds(transitionTime);
+    //        SceneManager.LoadScene(sceneName);
+    //        loadScene = true;
+    //    }
+       
+
+
+    //}
 }
