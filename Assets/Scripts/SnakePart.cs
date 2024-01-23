@@ -16,9 +16,10 @@ public class SnakePart : MonoBehaviour
     public Vector2 currentPosition;
     public  Vector2 previousPosition;
 
-
-    Vector2 moveDir;
-    Vector3 rotation;
+    private float screenRight;
+    private float screenLeft;
+    private float screenTop;
+    private float screenBottom;
 
     GameObject snake1;
     GameObject snake2;
@@ -28,45 +29,47 @@ public class SnakePart : MonoBehaviour
     {
         snake1 = GameState.Instance.snakeHead1Ref;
         snake2 = GameState.Instance.snakeHead2Ref;
+
+        //Gets All screen sides in world units
+        screenRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).x;
+        screenLeft = Camera.main.ScreenToWorldPoint(new Vector2(0f, 0f)).x;
+
+        screenTop = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y;
+        screenBottom = Camera.main.ScreenToWorldPoint(new Vector2(0f, 0f)).y;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ScreenWrap();
+        
     }
 
-    private void ScreenWrap()
+    public void ScreenWrap()
     {
         //Get Screen position of object in pixels
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        //Gets All screen sides in world units
-        float rightSideOfScreen = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).x;
-        float leftSideOfScreen = Camera.main.ScreenToWorldPoint(new Vector2(0f, 0f)).x;
-
-        float topSideOfScreen = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).y;
-        float bottomSideOfScreen = Camera.main.ScreenToWorldPoint(new Vector2(0f, 0f)).y;
+        
 
         if (screenPos.y > Screen.height)
         {
             
-            transform.position = new Vector2(transform.position.x, bottomSideOfScreen + boundCorrection);
+            transform.position = new Vector2(transform.position.x, screenBottom + boundCorrection);
         }
 
         if (screenPos.y < 0)
         {
 
-            transform.position = new Vector2(transform.position.x, topSideOfScreen - boundCorrection);
+            transform.position = new Vector2(transform.position.x, screenTop - boundCorrection);
         }
         if (screenPos.x > Screen.width)
         {
-            float roundedValue = Mathf.CeilToInt(leftSideOfScreen);
+            float roundedValue = Mathf.CeilToInt(screenLeft);
             transform.position = new Vector2(roundedValue, transform.position.y);
         }
         if (screenPos.x < 0)
         {
-            float roundedValue = Mathf.FloorToInt(rightSideOfScreen);
+            float roundedValue = Mathf.FloorToInt(screenRight);
             transform.position = new Vector2(roundedValue, transform.position.y);
         }
     }
@@ -76,13 +79,15 @@ public class SnakePart : MonoBehaviour
     {
         if (!this.gameObject.GetComponent<SnakeHead>())
         {
+            
             previousPosition = transform.position;
             currentPosition = newPos;
             transform.position = currentPosition;
+            
             CheckForDeath();
         }
-
         
+
     }
     
     public void CheckForDeath()

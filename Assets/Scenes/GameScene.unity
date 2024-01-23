@@ -463,8 +463,6 @@ MonoBehaviour:
   snakeBlueheadanim: SnakeHeadBlue
   snakeGreenBodyanim: SnakePartGreen
   snakeBlueBodyanim: SnakePartBlue
-  snake1ScoreText: p1-ScoreText
-  snake2ScoreText: p2-ScoreText
   Player1Up: 119
   Player1Down: 115
   Player1Left: 97
@@ -477,6 +475,8 @@ MonoBehaviour:
   snakeHead2Spawn: {x: 10, y: 0}
   player1Name: P1
   player2Name: P2
+  scoreTextController1: {fileID: 2103207939}
+  scoreTextController2: {fileID: 1656294908}
   snake1HeadSprite: {fileID: -6071458969901950045, guid: 5a3975339c0ab8e4b88f777a100e721f, type: 3}
   snake1BodySprite: {fileID: -3924248235966673212, guid: 5a3975339c0ab8e4b88f777a100e721f, type: 3}
   snake2HeadSprite: {fileID: -2513234768203876170, guid: 5a3975339c0ab8e4b88f777a100e721f, type: 3}

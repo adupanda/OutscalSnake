@@ -71,22 +71,20 @@ public class SnakeHead : MonoBehaviour
     [SerializeField]
     private Sprite scoreBoostHeadSprite;
 
-    ScoreTextController scoreTextController;
+    public ScoreTextController scoreTextController;
 
-    public string scoreTextObjectName;
+    SpriteRenderer spriteRenderer;
+
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         thisSnakePart = GetComponent<SnakePart>();
         
         
     }
 
-    public void OnNameSet()
-    {
-        scoreTextController = GameObject.Find(scoreTextObjectName)?.GetComponent<ScoreTextController>();
-        Debug.Log(scoreTextController);
-    }
+   
 
     public int  GetPlayerScore()
     {
@@ -102,7 +100,7 @@ public class SnakeHead : MonoBehaviour
         {
             PlayerScore += amount;
         }
-        Debug.Log(scoreTextController);
+        
         scoreTextController.SetScoreText(PlayerScore);
     }
     public void RemoveScore(int amount)
@@ -119,7 +117,7 @@ public class SnakeHead : MonoBehaviour
 
         StartCoroutine(MoveCoroutine());
         buttonPressed = transform.up;
-        snakeHeadSprite = GetComponent<SpriteRenderer>().sprite;
+        snakeHeadSprite = spriteRenderer.sprite;
     }
 
 
@@ -221,9 +219,10 @@ public class SnakeHead : MonoBehaviour
                         
                         
                     }
+                    
                 }
-               
-                
+                item.GetComponent<SnakePart>().ScreenWrap();
+
             }
             yield return new WaitForSeconds(moveDelay);
         }
@@ -239,14 +238,14 @@ public class SnakeHead : MonoBehaviour
     {
         isShieldActive = true;
 
-        GetComponent<SpriteRenderer>().sprite = shieldHeadSprite;
+        spriteRenderer.sprite = shieldHeadSprite;
         bool shieldLoop = false;
         while (!shieldLoop)
         {
 
             yield return new WaitForSeconds(shieldDuration);
             isShieldActive = false;
-            GetComponent<SpriteRenderer>().sprite =snakeHeadSprite;
+            spriteRenderer.sprite =snakeHeadSprite;
             shieldLoop = true;
 
             
@@ -262,14 +261,14 @@ public class SnakeHead : MonoBehaviour
     {
         moveDelay *= (speedUpPercentage / 100);
 
-        GetComponent<SpriteRenderer>().sprite = speedHeadSprite;
+        spriteRenderer.sprite = speedHeadSprite;
         bool speedUpLoop = false;
         while (!speedUpLoop)
         {
 
             yield return new WaitForSeconds(speedUpDuration);
             moveDelay = 0.1f;
-            GetComponent<SpriteRenderer>().sprite = snakeHeadSprite;
+            spriteRenderer.sprite = snakeHeadSprite;
             speedUpLoop = true;
 
             
@@ -284,14 +283,14 @@ public class SnakeHead : MonoBehaviour
     {
         isScoreBoosted = true;
 
-        GetComponent<SpriteRenderer>().sprite = scoreBoostHeadSprite;
+        spriteRenderer.sprite = scoreBoostHeadSprite;
         bool scoreBoostLoop = false;
         while (!scoreBoostLoop)
         {
 
             yield return new WaitForSeconds(scoreBoostDuration);
             isScoreBoosted = false;
-            GetComponent<SpriteRenderer>().sprite = snakeHeadSprite;
+            spriteRenderer.sprite = snakeHeadSprite;
             scoreBoostLoop = true;
 
 

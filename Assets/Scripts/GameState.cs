@@ -24,10 +24,7 @@ public class GameState : MonoBehaviour
 
 
 
-    [SerializeField]
-    string snake1ScoreText;
-    [SerializeField]
-    string snake2ScoreText;
+    
 
 
     [SerializeField]
@@ -56,6 +53,10 @@ public class GameState : MonoBehaviour
     private string player1Name;
     [SerializeField]
     private string player2Name;
+    [SerializeField]
+    ScoreTextController scoreTextController1;
+    [SerializeField]
+    ScoreTextController scoreTextController2;
 
     [SerializeField]
     Sprite snake1HeadSprite;
@@ -66,20 +67,25 @@ public class GameState : MonoBehaviour
     [SerializeField]
     Sprite snake2BodySprite;
 
+    
 
     public TextMeshProUGUI winnerText;
 
     private void Awake()
     {
-        
+
         if (instance == null)
         {
             instance = this;
         }
+        else
+        {
+            Destroy(gameObject);
+        }
         
         snakeHead1Ref = Instantiate(snakeHeadObject,snakeHead1Spawn,Quaternion.identity).GetComponentInChildren<SnakeHead>().gameObject;
-        
         snakeHead2Ref = Instantiate(snakeHeadObject, snakeHead2Spawn, Quaternion.identity).GetComponentInChildren<SnakeHead>().gameObject;
+        
         SetControlsAndName();
 
         winnerText.gameObject.SetActive(false);
@@ -96,7 +102,8 @@ public class GameState : MonoBehaviour
         snakeHead1.snakeName = player1Name;
         snakeHead1.headClip = snakeGreenheadanim;
         snakeHead1.bodyClip = snakeGreenBodyanim;
-        snakeHead1.scoreTextObjectName = snake1ScoreText;
+        
+        snakeHead1.scoreTextController = scoreTextController1;
         snakeHead1Ref.GetComponent<SpriteRenderer>().sprite = snake1HeadSprite;
         
         SnakeHead snakeHead2 = snakeHead2Ref.GetComponent<SnakeHead>();
@@ -108,10 +115,9 @@ public class GameState : MonoBehaviour
         snakeHead2.snakeName = player2Name;
         snakeHead2.headClip = snakeBlueheadanim;
         snakeHead2.bodyClip = snakeBlueBodyanim;
-        snakeHead2.scoreTextObjectName = snake2ScoreText;
+        snakeHead2.scoreTextController = scoreTextController2;
         snakeHead2Ref.GetComponent<SpriteRenderer>().sprite = snake2HeadSprite;
 
-        snakeHead1.OnNameSet();
-        snakeHead2.OnNameSet();
+        
     }
 }

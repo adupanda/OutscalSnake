@@ -42,7 +42,8 @@ public abstract class Consumables : MonoBehaviour
         Vector2 finalPosition = this.transform.position;
         LevelManager.Instance.positions.Remove(finalPosition);
         LevelManager.Instance.consumableListRef.Remove(this.gameObject);
-        Destroy(gameObject);
+        StopAllCoroutines();
+        DestroyImmediate(gameObject);
     }
     
     IEnumerator RemoveCoroutine()
@@ -53,7 +54,7 @@ public abstract class Consumables : MonoBehaviour
             
             yield return new WaitForSeconds(lifetime);
             RemoveConsumable();
-            Destroy(gameObject);
+            
         }
     }
 }
