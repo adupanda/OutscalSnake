@@ -23,6 +23,9 @@ public class SnakeHead : MonoBehaviour
     [SerializeField]
     float shieldDuration;
 
+    private float initialMoveDelay;
+
+
     [SerializeField]
     Sprite shieldHeadSprite;
 
@@ -118,6 +121,7 @@ public class SnakeHead : MonoBehaviour
         StartCoroutine(MoveCoroutine());
         buttonPressed = transform.up;
         snakeHeadSprite = spriteRenderer.sprite;
+        initialMoveDelay = moveDelay;
     }
 
 
@@ -267,7 +271,7 @@ public class SnakeHead : MonoBehaviour
         {
 
             yield return new WaitForSeconds(speedUpDuration);
-            moveDelay = 0.1f;
+            moveDelay = initialMoveDelay;
             spriteRenderer.sprite = snakeHeadSprite;
             speedUpLoop = true;
 

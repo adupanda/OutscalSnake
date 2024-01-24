@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec2085ee642db34f976000b828099f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chanceToSpawn: 100
+  chanceToSpawn: 30
   lifetime: 8

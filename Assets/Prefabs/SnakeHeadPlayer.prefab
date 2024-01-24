@@ -67,6 +67,7 @@ MonoBehaviour:
   speedUpDuration: 3
   scoreBoostDuration: 5
   scoreBoostHeadSprite: {fileID: -5094613862670528965, guid: caeedb3df76fc044ca073818b84ab3cf, type: 3}
+  scoreTextController: {fileID: 0}
 --- !u!212 &875122282778075595
 SpriteRenderer:
   m_ObjectHideFlags: 0
